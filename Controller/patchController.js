@@ -4,6 +4,7 @@ const parkingSlot = path.join(__dirname, '../Storage/parkingSlot.json');
 const { sendMobileSMS } = require('../Utils/TwilioSMS')
 
 exports.updateSlotStatus = async (req, res, next) => {
+    console.log(req.body);
     req.body.mobile_number = "+91" + req.body.mobile_number
     const msg = `Dear Customer, a quick reminder for your parking slot booking at PVR parking - it is reserved by today till the date you checkout.
 Feel safe for your parked vehicle.
@@ -18,7 +19,7 @@ Kindly regards,admin from PVR parking.`
     dataJson[index].vehicle_number = vehicle_number
     dataJson[index].vehicle_category = vehicle_category
     dataJson[index].mobile_number = mobile_number
-    dataJson[index].slot_status = 1
+    dataJson[index].slot_status = true
     fs.writeFile(parkingSlot, JSON.stringify(dataJson), () => { })
     fs.readFile(parkingSlot, async (err, dataSlot) => {
         if (err) return next(new Error("Something went wrong"))
@@ -42,7 +43,7 @@ Thank you,Please visit us again.`
     dataJson[index].amount = "",
     dataJson[index].vehicle_number = "",
     dataJson[index].vehicle_category = "",
-    dataJson[index].slot_status = "",
+    dataJson[index].slot_status = false,
     dataJson[index].mobile_number = "";
     fs.writeFile(parkingSlot, JSON.stringify(dataJson), () => { })
     fs.readFile(parkingSlot, async (err, dataSlot) => {
