@@ -1,0 +1,21 @@
+{
+  "name": "pvr_parking_be",
+  "version": "1.0.0",
+  "description": "Parking_app",
+  "main": "main.js",
+  "scripts": {
+    "start": "nodemon main.js",
+    "ngrok": "ngrok http 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ashish",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "googleapis": "^100.0.0",
+    "nodemailer": "^6.7.5",
+    "nodemon": "^2.0.16",
+    "twilio": "^3.77.0"
+  }
+}
