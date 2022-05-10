@@ -1,0 +1,16 @@
+body{
+    background-color: #f7e9d7;
+}
+
+.slots{
+    
+    cursor: pointer;
+    
+}
+
+
+.slots:hover{
+    background-color: skyblue;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
