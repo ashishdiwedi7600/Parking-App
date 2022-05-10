@@ -1,1 +1,1 @@
-export const URL = 'https://pvr-parking.herokuapp.com/'
+export const URL = 'https://pvr-parking.herokuapp.com'
