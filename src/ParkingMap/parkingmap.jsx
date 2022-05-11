@@ -63,7 +63,7 @@ export default function Parkingmap() {
                     }).map((slot,id) => {
           return <>
             <div className='slots'
-              style={{display:"flex",justifyContent:'center',alignItems:'center',objectFit:'contain',position:'relative',
+              style={{display:"flex",justifyContent:'center',alignItems:'center',objectFit:'contain',position:'relative',flexDirection:'column',
                 borderRadius: '10px', marginBottom: '100px', backgroundColor: slot.slot_status ? 'skyblue':'rgb(8,146,208)',
                 height: '150px', minWidth: '150px',color:'white'
               }}
@@ -79,7 +79,7 @@ export default function Parkingmap() {
               {slot.slot_status && slot.vehicle_category == "Loader" && <img src={Truck} style={{ height: '50%', width: '50%' }} />}
               {slot.slot_status && slot.vehicle_category == "Heavy Truck" && <img src={HeavyTruck} style={{ height: '50%', width: '50%' }} />}
               {slot.slot_status && slot.vehicle_category == "Mini Truck" && <img src={MiniTruck} style={{ height: '50%', width: '50%' }} />}
-              {slot.slot_number}
+            <b>{slot.slot_number}</b>  
             </div>
 
             {slotstatus && open && (parseInt(slot_number) === parseInt(id)+1) && <ParkedModal visible={visible} setVisible={setVisible} 

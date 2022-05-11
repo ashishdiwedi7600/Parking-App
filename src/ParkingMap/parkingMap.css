@@ -28,8 +28,7 @@ body{
    z-index: 9999;
    height:100%;
    width:100%;
-   opacity: 0.8;
    color:white ;
-   background-color: rgb(71, 153, 220);
+   background-color: rgba(71, 153, 220,0.9);
 
 }
