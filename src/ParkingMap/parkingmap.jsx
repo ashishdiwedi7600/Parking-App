@@ -3,8 +3,11 @@ import { getParkingSlots } from '../Service/getApi'
 import './parkingMap.css'
 import ParkedModal from './parkedModal'
 import UnParkedModal from './unparkedModal'
-
-
+import HeavyTruck from '../images/delivery-truck-front.png'
+import Truck from '../images/truck.png'
+import Car from '../images/sedan-car-front.png'
+import Bike from '../images/motorcycle.png'
+import MiniTruck from '../images/minitruck.png'
 export default function Parkingmap() {
 
   const [slots, setSlots] = useState([])
@@ -21,41 +24,48 @@ export default function Parkingmap() {
   }, [])
 
 
-  const handleClick = (slot, s_status,id) => {
- 
+  const handleClick = (slot, s_status, id) => {
+
     setVisible(!visible)
     setslotStatus(s_status)
     setOpen(!open)
     var BookDate = new Date();
     setSlotbooktime(BookDate);
-    setSlot_number(slot); 
+    setSlot_number(slot);
   }
-  console.log("======>>>>", slots);
   return (
     <>
       <h1 className='m-auto text-center text-warning mt-3 mb-3'>PVR PARKING</h1>
       <div style={{
-        backgroundColor:'#e4d1b9',
+        backgroundColor: 'lightgray', borderRadius: '10px',
         height: 'auto', width: '98%', display: 'flex', gap: '15px', padding: '20px', flexWrap: 'wrap', justifyContent: 'space-evenly', border: '1px solid red', margin: 'auto'
 
       }}>
 
-        {slots.map((slot,id) => {
+        {slots.map((slot, id) => {
           return <>
             <div className='slots'
-              style={{display:"flex",justifyContent:'center',alignItems:'center',objectFit:'contain',
-                borderRadius: '10px', marginBottom: '100px', backgroundColor: slot.slot_status ? 'skyblue':'green',
+              style={{
+                display: "flex", justifyContent: 'center', alignItems: 'center', objectFit: 'contain',position:'relative',
+                borderRadius: '10px', marginBottom: '100px', backgroundColor: slot.slot_status ? 'skyblue' : 'rgb(0,127,255)',
                 height: '150px', minWidth: '150px'
               }}
-              
-              onClick={() => handleClick(slot.slot_number, slot.slot_status,id)}>
-             {slot.slot_status && <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-  <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
-</svg>}
+              onClick={() => handleClick(slot.slot_number, slot.slot_status, id)}>
+
+             {slot.slot_status && <div className='slot-hover'   >
+               {slot.from_date}
+               <br/>
+               Slot No:{slot.slot_number}
+              </div>}
+              {slot.slot_status && slot.vehicle_category == "Car" && <img src={Car} style={{ height: '50%', width: '50%' }} />}
+              {slot.slot_status && slot.vehicle_category == "Bike" && <img src={Bike} style={{ height: '50%', width: '50%' }} />}
+              {slot.slot_status && slot.vehicle_category == "Loader" && <img src={Truck} style={{ height: '50%', width: '50%' }} />}
+              {slot.slot_status && slot.vehicle_category == "Heavy Truck" && <img src={HeavyTruck} style={{ height: '50%', width: '50%' }} />}
+              {slot.slot_status && slot.vehicle_category == "Mini Truck" && <img src={MiniTruck} style={{ height: '50%', width: '50%' }} />}
               {slot.slot_number}
             </div>
 
-            {slotstatus && open && (parseInt(slot_number) == parseInt(id)+1) && <ParkedModal visible={visible} setVisible={setVisible} 
+            {slotstatus && open && (parseInt(slot_number) == parseInt(id) + 1) && <ParkedModal visible={visible} setVisible={setVisible}
               slot={slot}
               setSlots={setSlots}
               slot_number={slot_number}
@@ -63,7 +73,7 @@ export default function Parkingmap() {
               setOpen={setOpen}
               open={open} />}
 
-            {!slotstatus && open  && <UnParkedModal visible={visible} slot_num={slot_number} setSlots={setSlots}
+            {!slotstatus && open && <UnParkedModal visible={visible} slot_num={slot_number} setSlots={setSlots}
               setOpen={setOpen}
               id={id}
               open={open}
