@@ -3,6 +3,7 @@ import { getParkingSlots } from '../Service/getApi'
 import './parkingMap.css'
 import ParkedModal from './parkedModal'
 import UnParkedModal from './unparkedModal'
+import Search from './search'
 
 
 export default function Parkingmap() {
@@ -12,6 +13,8 @@ export default function Parkingmap() {
   const [visible, setVisible] = useState(null)
   const [slot_number, setSlot_number] = useState('')
   const [slotbooktime, setSlotbooktime] = useState('')
+  const [searchTerm, setSearchTerm] = useState("")
+
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -19,6 +22,11 @@ export default function Parkingmap() {
     getParkingSlots().then(res => setSlots(res.data.data)).catch(e => console.log(e))
 
   }, [])
+  const handleSearch = e => {
+    setSearchTerm(e.target.value)
+    console.log(searchTerm);
+
+}
 
 
   const handleClick = (slot, s_status,id) => {
@@ -34,18 +42,26 @@ export default function Parkingmap() {
   return (
     <>
       <h1 className='m-auto text-center text-warning mt-3 mb-3'>PVR PARKING</h1>
+      <Search handleSearch={handleSearch}  />
       <div style={{
         backgroundColor:'#e4d1b9',
         height: 'auto', width: '98%', display: 'flex', gap: '15px', padding: '20px', flexWrap: 'wrap', justifyContent: 'space-evenly', border: '1px solid red', margin: 'auto'
 
       }}>
 
-        {slots.map((slot,id) => {
+        {slots.filter((slot) => {
+                        if (searchTerm === "")
+                            return slot
+
+                        else if (slot.vehicle_number.toLowerCase().includes(searchTerm.toLowerCase()))
+                            return slot
+                        
+                    }).map((slot,id) => {
           return <>
             <div className='slots'
               style={{display:"flex",justifyContent:'center',alignItems:'center',objectFit:'contain',
                 borderRadius: '10px', marginBottom: '100px', backgroundColor: slot.slot_status ? 'skyblue':'green',
-                height: '150px', minWidth: '150px'
+                height: '150px', minWidth: '150px',color:'white'
               }}
               
               onClick={() => handleClick(slot.slot_number, slot.slot_status,id)}>
@@ -55,7 +71,7 @@ export default function Parkingmap() {
               {slot.slot_number}
             </div>
 
-            {slotstatus && open && (parseInt(slot_number) == parseInt(id)+1) && <ParkedModal visible={visible} setVisible={setVisible} 
+            {slotstatus && open && (parseInt(slot_number) === parseInt(id)+1) && <ParkedModal visible={visible} setVisible={setVisible} 
               slot={slot}
               setSlots={setSlots}
               slot_number={slot_number}

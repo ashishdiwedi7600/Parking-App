@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { BookSlot } from '../Service/updateApi'
 import '../App.css'
@@ -37,6 +37,9 @@ console.log(props.visible);
 
         <Modal isOpen={visible}
           toggle={() =>{ setVisible(!visible);setOpen(!open)}}>
+            <ModalHeader toggle={() =>{ setVisible(!visible);setOpen(!open)}}>
+                  <h3 className='text-warning'>PVR PARKING</h3>
+                </ModalHeader>
         
           <ModalBody style={{ height: "auto" }}>
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '15px' }}>
